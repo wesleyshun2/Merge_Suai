@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suai Project</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <header>
+    <nav class="language-picker">
+      <label for="language-select">Select Language:</label>
+      <select id="language-select" onchange="changeLanguage()">
+        <option value="en" selected>English</option>
+        <option value="zh">中文</option>
+      </select>
+    </nav>
+  </header>
+
+  <main>
+    <section id="project-intro">
+      <h1 id="intro-title">Welcome to Suai Project</h1>
+      <p id="intro-description">[Project introduction placeholder]</p>
+      <!-- 可替換為圖片 -->
+      <img src="placeholder.jpg" alt="[Placeholder image]" />
+    </section>
+
+    <section id="user-account">
+      <button id="connect-wallet-btn" onclick="connectWallet()">Connect Wallet</button>
+      <button id="profile-btn" style="display: none;" onclick="goToProfile()">Go to Profile</button>
+    </section>
+  </main>
+
+  <script src="index.js"></script>
+</body>
+</html>
