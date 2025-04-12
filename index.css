@@ -1,38 +1,176 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 }
 
-header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
+/* 上傳表單動畫 */
+.upload-trigger {
+  border: 2px dashed #ccc;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.language-picker {
-  margin-right: 20px;
+/* 修正表單展開動畫 */
+#upload-form {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease; /* 添加平滑過渡效果 */
+  padding: 0 20px;
 }
 
-main {
+#upload-form.expanded {
   padding: 20px;
 }
 
-#project-intro {
-  text-align: center;
+/* 錯誤樣式強化 */
+.error {
+  border: 2px solid #ff4444 !important;
+  animation: shake 0.5s;
 }
 
-#project-intro img {
-  max-width: 100%;
-  height: auto;
+/* 表單樣式 */
+.form-group {
+  margin-bottom: 20px;
 }
 
-#user-account {
-  text-align: center;
-  margin-top: 20px;
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-button {
+.form-group input,
+.form-group textarea {
+  width: calc(100% - 20px);
   padding: 10px;
-  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 多行文本框樣式 */
+textarea {
+  resize: vertical; /* 可手動調整高度 */
+  overflow-y: auto; /* 滾動條 */
+}
+
+/* 程式碼統計樣式 */
+.code-stats {
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.code-stats span#effective-lines {
+  font-weight: bold;
+  color: #2196F3;
+}
+
+.hint {
+  font-style: italic;
+  margin-left: 10px;
+  color: #999;
+}
+
+/* 表單錯誤樣式 */
+.error {
+  border-color: red !important;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* 訊息框樣式 */
+.message-box {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  display: none; /* 預設隱藏 */
+}
+
+.message-box.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message-box.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* 歷史紀錄表格樣式 */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.history-table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.history-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.history-table .no-data,
+.history-table .error-msg {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* 歷史紀錄列表樣式 */
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.history-list li {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.history-list .no-data,
+.history-list .error-msg {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* 條款區塊樣式 */
+.terms-section {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.terms-section #terms-summary {
+  font-weight: bold;
+}
+
+.terms-section #terms-content {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.hidden {
+  display: none;
 }

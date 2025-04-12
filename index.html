@@ -3,34 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Suai Project</title>
-  <link rel="stylesheet" href="index.css">
+  <title>Suai Profile</title>
+  <link rel="stylesheet" href="profile.css">
 </head>
+
 <body>
-  <header>
-    <nav class="language-picker">
-      <label for="language-select">Select Language:</label>
-      <select id="language-select" onchange="changeLanguage()">
-        <option value="en" selected>English</option>
-        <option value="zh">中文</option>
-      </select>
-    </nav>
-  </header>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 
-  <main>
-    <section id="project-intro">
-      <h1 id="intro-title">Welcome to Suai Project</h1>
-      <p id="intro-description">[Project introduction placeholder]</p>
-      <!-- 可替換為圖片 -->
-      <img src="placeholder.jpg" alt="[Placeholder image]" />
-    </section>
+  <!-- 連接 Sui 錢包 -->
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 
-    <section id="user-account">
-      <button id="connect-wallet-btn" onclick="connectWallet()">Connect Wallet</button>
-      <button id="profile-btn" style="display: none;" onclick="goToProfile()">Go to Profile</button>
-    </section>
-  </main>
+  <!-- 上傳紀錄 -->
+  <section class="upload-history">
+    <h2 id="history-title">Upload History</h2>
+    <ul id="history-list" class="history-list"></ul>
+    <a href="javascript:void(0);" id="show-all" onclick="loadHistory(true)">▼ Show Full History</a>
+  </section>
 
-  <script src="index.js"></script>
+  <!-- 上傳區塊 -->
+  <div class="upload-section">
+    <div class="upload-trigger" onclick="toggleUploadForm()">
+      <div class="upload-header">Upload Code</div>
+    </div>  
+    
+    <form id="upload-form" class="hidden">
+      <!-- 暫時欄位 -->
+      <div class="form-group required">
+        <label for="wallet">Wallet Address</label>
+        <input type="text" id="wallet" name="wallet" required />
+      </div>
+
+      <!-- 必填欄位 -->
+      <div class="form-group required">
+        <label for="contract-address">Contract Address</label>
+        <input type="text" id="contract-address" placeholder="Enter contract address" required>
+      </div>
+
+      <div class="form-group required">
+        <label for="project-name">Project Name</label>
+        <input type="text" id="project-name" placeholder="Enter project name" required>
+      </div>
+    
+      <div class="form-group required">
+        <label for="contract-description">Contract Description</label>
+        <textarea id="contract-description" placeholder="Enter contract description" rows="3" required></textarea>
+      </div>
+
+      <div class="form-group required">
+        <label for="code-snippet">Code Snippet</label>
+        <textarea 
+          id="code-snippet" 
+          placeholder="Enter code snippet" 
+          rows="10"
+          oninput="updateCodeStats(this.value)"
+          required
+        ></textarea>
+        <div class="code-stats">
+          Effective lines of code: <span id="effective-lines">0</span>
+          <span class="hint">(Excludes empty lines, comments, and symbol-only lines)</span>
+        </div>
+      </div>
+   
+      <!-- 授權條款 -->
+      <div class="terms-section">
+        <p id="terms-summary" onclick="toggleTerms()">By uploading, you agree to the terms ▼</p>
+        <div id="terms-content" class="hidden">
+          <p>Terms: Uploaded code will be stored and analyzed. Please ensure you have the legal rights to the code.</p>
+        </div>
+      </div>
+    
+      <!-- 確定上傳按鈕 -->
+      <button type="button" onclick="submitForm()" id="submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <div id="message-box" class="message-box"></div>
+  
+  <script src="profile.js"></script>
 </body>
 </html>
