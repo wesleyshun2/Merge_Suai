@@ -189,3 +189,5 @@ function toggleTerms() {
 window.addEventListener('load', () => {
   loadHistory();
 });
+window.loadHistory = loadHistory;
+window.toggleUploadForm = toggleUploadForm;
