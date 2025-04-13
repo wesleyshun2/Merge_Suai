@@ -28,13 +28,13 @@ export async function loadHistory(showAll = false) {
         showAllButton.classList.remove('hidden');
       }
     } else {
-      historyList.innerHTML = '<li class="no-data">無上傳紀錄</li>';
+      historyList.innerHTML = '<li class="no-data">Empty upload history</li>';
       showAllButton.classList.add('hidden'); // 如果沒有記錄，隱藏按鈕
     }
   } catch (error) {
     console.error(error);
     const historyList = document.getElementById('history-list');
-    historyList.innerHTML = '<li class="error-msg">查詢失敗，請稍後再試</li>';
+    historyList.innerHTML = '<li class="error-msg">Reading failed, please try later</li>';
   }
 }
 

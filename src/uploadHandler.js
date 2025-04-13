@@ -7,7 +7,35 @@ const codeAnalyzer = {
       start: /^\s*\/\*/,
       end: /\*\/\s*$/,
     },
-    symbolsOnly: /^[{};[\](),]*$/,
+    containsTextOrNumber: /[a-zA-Z0-9]/, // 檢查是否包含英文字母或數字
+  },
+
+  isIgnorableLine(line, inCommentBlock) {
+    const trimmed = line.trim();
+
+    // 如果在多行註解塊中，檢查是否結束
+    if (inCommentBlock) {
+      if (this.patterns.multiLineComment.end.test(trimmed)) {
+        return { ignore: true, inCommentBlock: false };
+      }
+      return { ignore: true, inCommentBlock: true };
+    }
+
+    // 檢查是否為空行或單行註解
+    if (
+      this.patterns.emptyLine.test(trimmed) ||
+      this.patterns.singleLineComment.test(trimmed)
+    ) {
+      return { ignore: true, inCommentBlock: false };
+    }
+
+    // 檢查是否為多行註解的開始
+    if (this.patterns.multiLineComment.start.test(trimmed)) {
+      return { ignore: true, inCommentBlock: true };
+    }
+
+    // 如果不是可忽略的行
+    return { ignore: false, inCommentBlock: false };
   },
 
   analyze(code) {
@@ -15,26 +43,15 @@ const codeAnalyzer = {
     let inCommentBlock = false;
 
     code.split('\n').forEach((line) => {
-      const trimmed = line.trim();
+      const { ignore, inCommentBlock: updatedCommentBlock } = this.isIgnorableLine(
+        line,
+        inCommentBlock
+      );
+      inCommentBlock = updatedCommentBlock;
 
-      if (inCommentBlock) {
-        if (this.patterns.multiLineComment.end.test(trimmed)) {
-          inCommentBlock = false;
-        }
-        return;
+      if (!ignore && this.patterns.containsTextOrNumber.test(line.trim())) {
+        effectiveLines++;
       }
-
-      if (
-        this.patterns.emptyLine.test(trimmed) ||
-        this.patterns.singleLineComment.test(trimmed) ||
-        this.patterns.symbolsOnly.test(trimmed) ||
-        this.patterns.multiLineComment.start.test(trimmed)
-      ) {
-        inCommentBlock = true;
-        return;
-      }
-
-      effectiveLines++;
     });
 
     return effectiveLines;
@@ -90,7 +107,7 @@ export async function submitForm() {
 
   const codeLines = codeAnalyzer.analyze(formData.codeSnippet);
   if (codeLines < 1) {
-    showMessage('程式碼內容不可為空', 'error');
+    showMessage('Code content cannot be empty', 'error'); // 程式碼內容不可為空
     return;
   }
 
@@ -103,10 +120,10 @@ export async function submitForm() {
 
     if (!response.ok) throw new Error('Upload failed');
 
-    showMessage('上傳成功！', 'success');
+    showMessage('Upload successful!', 'success'); // 上傳成功！
     document.getElementById('upload-form').reset();
   } catch (error) {
-    showMessage('上傳失敗，請稍後再試', 'error');
+    showMessage('Upload failed, please try again later', 'error'); // 上傳失敗，請稍後再試
     console.error(error);
   }
 }
@@ -130,9 +147,9 @@ export function toggleTerms() {
 
   if (termsContent.classList.contains('hidden')) {
     termsContent.classList.remove('hidden');
-    termsSummary.textContent = '上傳即表示同意條款 ▲';
+    termsSummary.textContent = 'By uploading, you agree to the terms ▲'; // 上傳即表示同意條款 ▲
   } else {
     termsContent.classList.add('hidden');
-    termsSummary.textContent = '上傳即表示同意條款 ▼';
+    termsSummary.textContent = 'By uploading, you agree to the terms ▼'; // 上傳即表示同意條款 ▼
   }
 }
