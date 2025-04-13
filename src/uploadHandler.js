@@ -94,12 +94,23 @@ function showMessage(message, type = 'success') {
 
 // 表單提交函數
 export async function submitForm() {
+  const walletInput = document.getElementById('wallet');
+  const walletError = document.getElementById('wallet-error');
+
+  // 檢查是否有連接錢包
+  if (!walletInput.value.trim()) {
+    walletInput.classList.add('error');
+    walletError.classList.remove('hidden');
+    showMessage('Please connect your wallet first', 'error');
+    return;
+  }
+
   if (!validateForm()) return;
 
   const formData = {
     timestamp: new Date().toISOString(),
     contractAddress: document.getElementById('contract-address').value,
-    wallet: document.getElementById('wallet').value,
+    wallet: walletInput.value,
     projectName: document.getElementById('project-name').value,
     contractDescription: document.getElementById('contract-description').value,
     codeSnippet: document.getElementById('code-snippet').value,
@@ -107,7 +118,7 @@ export async function submitForm() {
 
   const codeLines = codeAnalyzer.analyze(formData.codeSnippet);
   if (codeLines < 1) {
-    showMessage('Code content cannot be empty', 'error'); // 程式碼內容不可為空
+    showMessage('Code content cannot be empty', 'error');
     return;
   }
 
@@ -120,10 +131,10 @@ export async function submitForm() {
 
     if (!response.ok) throw new Error('Upload failed');
 
-    showMessage('Upload successful!', 'success'); // 上傳成功！
+    showMessage('Upload successful!', 'success');
     document.getElementById('upload-form').reset();
   } catch (error) {
-    showMessage('Upload failed, please try again later', 'error'); // 上傳失敗，請稍後再試
+    showMessage('Upload failed, please try again later', 'error');
     console.error(error);
   }
 }
