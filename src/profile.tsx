@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import ReactDOM from 'react-dom/client';
 
 // 程式碼分析工具函數
 const codeAnalyzer = {
@@ -73,50 +72,42 @@ const submitForm = async (formData: {
 };
 
 // 歷史紀錄邏輯
-const loadHistory = async (showAll: boolean, setHistory: React.Dispatch<React.SetStateAction<any[]>>) => {
+const loadHistory = async (setHistory: React.Dispatch<React.SetStateAction<any[]>>) => {
   try {
     const response = await fetch('/.netlify/functions/get-history');
     const data = await response.json();
-    setHistory(showAll ? data : data.slice(0, 5));
+    setHistory(data);
   } catch (error) {
     console.error(error);
     alert('查詢失敗，請稍後再試');
+    setHistory([]); // 返回空數組以避免後續邏輯出錯
   }
 };
 
 // 主組件
 const Main = () => {
-  const [history, setHistory] = useState<any[]>([]);
+  interface HistoryItem {
+    timestamp: string;
+    projectName: string;
+    codeLines: number;
+  }
+
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [showAllHistory, setShowAllHistory] = useState(false);
-  const [formExpanded, setFormExpanded] = useState(false);
 
   useEffect(() => {
-    loadHistory(false, setHistory);
-  }, []);
+    loadHistory(setHistory);
+  }, [loadHistory]);
 
-  const toggleUploadForm = () => {
-    setFormExpanded(!formExpanded);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    submitForm({
-      contractAddress: formData.get('contract-address') as string,
-      wallet: formData.get('wallet') as string,
-      projectName: formData.get('project-name') as string,
-      contractDescription: formData.get('contract-description') as string,
-      codeSnippet: formData.get('code-snippet') as string,
-    });
-  };
+  const displayedHistory = showAllHistory ? history : history.slice(0, 5);
 
   return (
     <div>
       <section className="upload-history">
         <h2>Upload History</h2>
         <ul>
-          {history.length > 0 ? (
-            history.map((item, index) => (
+          {displayedHistory.length > 0 ? (
+            displayedHistory.map((item, index) => (
               <li key={index}>
                 {new Date(item.timestamp).toLocaleString()} - {item.projectName} ({item.codeLines} lines)
               </li>
@@ -126,43 +117,55 @@ const Main = () => {
           )}
         </ul>
         {!showAllHistory && history.length > 5 && (
-          <button onClick={() => loadHistory(true, setHistory)}>Show Full History</button>
+          <button onClick={() => setShowAllHistory(true)}>Show Full History</button>
         )}
       </section>
 
       <div className="upload-section">
-        <button onClick={toggleUploadForm}>
-          {formExpanded ? 'Hide Upload Form' : 'Show Upload Form'}
-        </button>
-        {formExpanded && (
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>Wallet Address</label>
-              <input type="text" name="wallet" required />
-            </div>
-            <div>
-              <label>Contract Address</label>
-              <input type="text" name="contract-address" required />
-            </div>
-            <div>
-              <label>Project Name</label>
-              <input type="text" name="project-name" required />
-            </div>
-            <div>
-              <label>Contract Description</label>
-              <textarea name="contract-description" required />
-            </div>
-            <div>
-              <label>Code Snippet</label>
-              <textarea name="code-snippet" required />
-            </div>
-            <button type="submit">Submit</button>
-          </form>
-        )}
+        <form
+          onSubmit={(event) => {
+            event.preventDefault(); // 防止默認的表單提交行為
+            const formData = new FormData(event.currentTarget);
+            submitForm({
+              wallet: formData.get('wallet') as string,
+              contractAddress: formData.get('contract-address') as string,
+              projectName: formData.get('project-name') as string,
+              contractDescription: formData.get('contract-description') as string,
+              codeSnippet: formData.get('code-snippet') as string,
+            });
+          }}
+        >
+          <div>
+            <label>Wallet Address</label>
+            <input type="text" name="wallet" required />
+          </div>
+          <div>
+            <label>Contract Address</label>
+            <input type="text" name="contract-address" required />
+          </div>
+          <div>
+            <label>Project Name</label>
+            <input type="text" name="project-name" required />
+          </div>
+          <div>
+            <label>Contract Description</label>
+            <textarea name="contract-description" required />
+          </div>
+          <div>
+            <label>Code Snippet</label>
+            <textarea name="code-snippet" required />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
   );
 };
 
 // 渲染應用
-ReactDOM.render(<Main />, document.getElementById('root'));
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+const root = ReactDOM.createRoot(rootElement);
+root.render(<Main />);
