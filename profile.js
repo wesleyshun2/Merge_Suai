@@ -11,6 +11,7 @@ document.getElementById('terms-summary').addEventListener('click', toggleTerms);
 // 顯示錢包地址
 function displayWalletAddress() {
     const walletAddress = window.connectedWallet || 'Not connected';
+    console.log('Wallet Address:', window.connectedWallet);
     const walletElement = document.getElementById('wallet-address');
     if (walletElement) {
         walletElement.textContent = walletAddress;
