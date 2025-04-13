@@ -19,7 +19,11 @@ function ConnectedAccount() {
     if (!account) {
         return <div>Connected to check history or upload</div>;
     }
-    return null;
+
+    // 將帳戶資訊存入全局變數
+    window.connectedWallet = account.address;
+
+    return <div>Connected Wallet: {account.address}</div>;
 }
 
 export default App;

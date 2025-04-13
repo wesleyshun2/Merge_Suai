@@ -8,5 +8,17 @@ document.getElementById('code-snippet').addEventListener('input', (e) => updateC
 document.querySelector('.upload-trigger').addEventListener('click', toggleUploadForm);
 document.getElementById('terms-summary').addEventListener('click', toggleTerms);
 
+// 顯示錢包地址
+function displayWalletAddress() {
+    const walletAddress = window.connectedWallet || 'Not connected';
+    const walletElement = document.getElementById('wallet-address');
+    if (walletElement) {
+        walletElement.textContent = walletAddress;
+    }
+}
+
 // 頁面載入時加載歷史紀錄
 window.addEventListener('load', () => loadHistory());
+
+// 頁面載入時顯示錢包地址
+window.addEventListener('load', displayWalletAddress);
