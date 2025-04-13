@@ -84,86 +84,79 @@ const loadHistory = async (setHistory: React.Dispatch<React.SetStateAction<any[]
   }
 };
 
-// 上傳歷史組件
-export const UploadHistory = () => {
-  const [history, setHistory] = useState<any[]>([]);
+// 主組件
+const Main = () => {
+  interface HistoryItem {
+    timestamp: string;
+    projectName: string;
+    codeLines: number;
+  }
+
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [showAllHistory, setShowAllHistory] = useState(false);
 
   useEffect(() => {
     loadHistory(setHistory);
-  }, []);
+  }, [loadHistory]);
 
   const displayedHistory = showAllHistory ? history : history.slice(0, 5);
 
   return (
-    <section className="upload-history">
-      <h2>Upload History</h2>
-      <ul>
-        {displayedHistory.length > 0 ? (
-          displayedHistory.map((item, index) => (
-            <li key={index}>
-              {new Date(item.timestamp).toLocaleString()} - {item.projectName} ({item.codeLines} lines)
-            </li>
-          ))
-        ) : (
-          <li>No history available</li>
-        )}
-      </ul>
-      {!showAllHistory && history.length > 5 && (
-        <button onClick={() => setShowAllHistory(true)}>Show Full History</button>
-      )}
-    </section>
-  );
-};
-
-// 上傳表單組件
-export const UploadForm = () => {
-  return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault(); // 防止默認的表單提交行為
-        const formData = new FormData(event.currentTarget);
-        submitForm({
-          wallet: formData.get('wallet') as string,
-          contractAddress: formData.get('contract-address') as string,
-          projectName: formData.get('project-name') as string,
-          contractDescription: formData.get('contract-description') as string,
-          codeSnippet: formData.get('code-snippet') as string,
-        });
-      }}
-    >
-      <div>
-        <label>Wallet Address</label>
-        <input type="text" name="wallet" required />
-      </div>
-      <div>
-        <label>Contract Address</label>
-        <input type="text" name="contract-address" required />
-      </div>
-      <div>
-        <label>Project Name</label>
-        <input type="text" name="project-name" required />
-      </div>
-      <div>
-        <label>Contract Description</label>
-        <textarea name="contract-description" required />
-      </div>
-      <div>
-        <label>Code Snippet</label>
-        <textarea name="code-snippet" required />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-  );
-};
-
-// 主組件
-const Main = () => {
-  return (
     <div>
-      <UploadHistory />
+      <section className="upload-history">
+        <h2>Upload History</h2>
+        <ul>
+          {displayedHistory.length > 0 ? (
+            displayedHistory.map((item, index) => (
+              <li key={index}>
+                {new Date(item.timestamp).toLocaleString()} - {item.projectName} ({item.codeLines} lines)
+              </li>
+            ))
+          ) : (
+            <li>No history available</li>
+          )}
+        </ul>
+        {!showAllHistory && history.length > 5 && (
+          <button onClick={() => setShowAllHistory(true)}>Show Full History</button>
+        )}
+      </section>
+
       <div className="upload-section">
-        <UploadForm />
+        <form
+          onSubmit={(event) => {
+            event.preventDefault(); // 防止默認的表單提交行為
+            const formData = new FormData(event.currentTarget);
+            submitForm({
+              wallet: formData.get('wallet') as string,
+              contractAddress: formData.get('contract-address') as string,
+              projectName: formData.get('project-name') as string,
+              contractDescription: formData.get('contract-description') as string,
+              codeSnippet: formData.get('code-snippet') as string,
+            });
+          }}
+        >
+          <div>
+            <label>Wallet Address</label>
+            <input type="text" name="wallet" required />
+          </div>
+          <div>
+            <label>Contract Address</label>
+            <input type="text" name="contract-address" required />
+          </div>
+          <div>
+            <label>Project Name</label>
+            <input type="text" name="project-name" required />
+          </div>
+          <div>
+            <label>Contract Description</label>
+            <textarea name="contract-description" required />
+          </div>
+          <div>
+            <label>Code Snippet</label>
+            <textarea name="code-snippet" required />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
   );
