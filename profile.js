@@ -13,11 +13,11 @@ document.getElementById('terms-summary').addEventListener('click', toggleTerms);
 window.addEventListener('load', () => loadHistory());
 
 // 初始化頁面時檢查錢包連接狀態
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   const walletInput = document.getElementById('wallet');
   const walletError = document.getElementById('wallet-error');
 
-  // 使用 `useCurrentAccount` 獲取當前連接的帳戶
+  // 確保 `useCurrentAccount` 能正確返回帳戶
   const account = useCurrentAccount();
 
   if (account) {
