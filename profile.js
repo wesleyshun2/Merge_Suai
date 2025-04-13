@@ -1,21 +1,54 @@
 import { loadHistory } from './src/historyHandler.js';
 import { updateCodeStats, submitForm, toggleUploadForm, toggleTerms } from './src/uploadHandler.js';
 
-// 綁定事件
-document.getElementById('show-all').addEventListener('click', () => loadHistory(true));
-document.getElementById('submit-btn').addEventListener('click', submitForm);
-document.getElementById('code-snippet').addEventListener('input', (e) => updateCodeStats(e.target.value));
-document.querySelector('.upload-trigger').addEventListener('click', toggleUploadForm);
-document.getElementById('terms-summary').addEventListener('click', toggleTerms);
+window.addEventListener('DOMContentLoaded', () => {
+    // 綁定事件
+    const showAllButton = document.getElementById('show-all');
+    if (showAllButton) {
+        showAllButton.addEventListener('click', () => loadHistory(true));
+    }
+
+    const submitButton = document.getElementById('submit-btn');
+    if (submitButton) {
+        submitButton.addEventListener('click', submitForm);
+    }
+
+    const codeSnippet = document.getElementById('code-snippet');
+    if (codeSnippet) {
+        codeSnippet.addEventListener('input', (e) => updateCodeStats(e.target.value));
+    }
+
+    const uploadTrigger = document.querySelector('.upload-trigger');
+    if (uploadTrigger) {
+        uploadTrigger.addEventListener('click', toggleUploadForm);
+    }
+
+    const termsSummary = document.getElementById('terms-summary');
+    if (termsSummary) {
+        termsSummary.addEventListener('click', toggleTerms);
+    }
+
+    // 顯示錢包地址
+    displayWalletAddress();
+});
 
 // 顯示錢包地址
 function displayWalletAddress() {
-    const walletAddress = window.connectedWallet || 'Not connected';
-    console.log('Wallet Address:', window.connectedWallet);
     const walletElement = document.getElementById('wallet-address');
-    if (walletElement) {
-        walletElement.textContent = walletAddress;
+    if (!walletElement) {
+        console.error('Element with ID "wallet-address" not found.');
+        return;
     }
+
+    const checkWallet = () => {
+        const walletAddress = window.connectedWallet || 'Not connected';
+        walletElement.textContent = walletAddress;
+        if (!window.connectedWallet) {
+            setTimeout(checkWallet, 500); // 每 500 毫秒檢查一次
+        }
+    };
+
+    checkWallet();
 }
 
 // 頁面載入時加載歷史紀錄
