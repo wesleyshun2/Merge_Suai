@@ -174,13 +174,3 @@ textarea {
 .hidden {
   display: none;
 }
-
-.error-msg {
-  color: red;
-  font-size: 0.9em;
-  margin-top: 5px;
-}
-
-input.error {
-  border-color: red;
-}
