@@ -35,8 +35,6 @@ window.addEventListener('DOMContentLoaded', () => {
 // 顯示錢包地址
 function displayWalletAddress() {
     const walletElement = document.getElementById('wallet-address');
-    const walletInput = document.getElementById('wallet'); // 新增對錢包輸入框的引用
-
     if (!walletElement) {
         return;
     }
@@ -44,12 +42,6 @@ function displayWalletAddress() {
     const checkWallet = () => {
         const walletAddress = window.connectedWallet || 'Not connected';
         walletElement.textContent = walletAddress;
-
-        // 自動填入錢包地址到輸入框
-        if (walletInput) {
-            walletInput.value = walletAddress !== 'Not connected' ? walletAddress : '';
-        }
-
         if (!window.connectedWallet) {
             setTimeout(checkWallet, 500); // 每 500 毫秒檢查一次
         }
