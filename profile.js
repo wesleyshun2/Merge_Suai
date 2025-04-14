@@ -32,6 +32,14 @@ window.addEventListener('DOMContentLoaded', () => {
     displayWalletAddress();
 });
 
+// 監聽錢包地址更新事件
+window.addEventListener('walletUpdated', (event) => {
+    const walletElement = document.getElementById('wallet-display');
+    if (walletElement) {
+        walletElement.textContent = event.detail || 'Not connected';
+    }
+});
+
 // 顯示錢包地址
 function displayWalletAddress() {
     const walletElement = document.getElementById('wallet-address');

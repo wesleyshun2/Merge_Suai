@@ -22,6 +22,10 @@ function ConnectedAccount() {
 
     // 將錢包地址存入全局變數
     window.connectedWallet = account.address;
+    
+    // 當更新全局變數時，觸發事件
+    const event = new CustomEvent('walletUpdated', { detail: account.address });
+    window.dispatchEvent(event);
 }
 
 export default App;
