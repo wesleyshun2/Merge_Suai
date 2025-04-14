@@ -68,5 +68,13 @@ export async function loadHistory(showAll = false) {
 
 // 網頁載入時執行
 window.addEventListener('load', () => {
-  loadHistory();
+  // 初次檢查是否已連結錢包
+  if (window.connectedWallet) {
+    loadHistory();
+  }
+
+  // 監聽錢包地址更新事件
+  window.addEventListener('walletUpdated', () => {
+    loadHistory();
+  });
 });
