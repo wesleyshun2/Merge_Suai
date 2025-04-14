@@ -99,12 +99,19 @@ function showMessage(message, type = 'success') {
 
 // 表單提交函數
 export async function submitForm() {
+    // 檢查是否連結錢包
+    const walletAddress = getWalletAddress();
+    if (walletAddress === 'Not connected') {
+        showMessage('Please connect your wallet before uploading.', 'error'); // 提示要求連結錢包
+        return;
+    }
+
     if (!validateForm()) return;
 
     const formData = {
         timestamp: new Date().toISOString(),
         contractAddress: document.getElementById('contract-address').value,
-        wallet: getWalletAddress(), // 修正這裡，直接使用 getWalletAddress()
+        wallet: walletAddress, // 使用檢查後的錢包地址
         projectName: document.getElementById('project-name').value,
         contractDescription: document.getElementById('contract-description').value,
         codeSnippet: document.getElementById('code-snippet').value,
