@@ -68,6 +68,11 @@ export function updateCodeStats(code) {
   }, 300); // 300ms 防抖延遲
 }
 
+// 獲取全局變數 window.connectedWallet
+function getWalletAddress() {
+  return window.connectedWallet || 'Not connected';
+}
+
 // 表單驗證與提交
 function validateForm() {
   let isValid = true;
@@ -99,7 +104,7 @@ export async function submitForm() {
   const formData = {
     timestamp: new Date().toISOString(),
     contractAddress: document.getElementById('contract-address').value,
-    wallet: document.getElementById('wallet').value,
+    wallet: getWalletAddress().value, // 獲取全局變數 window.connectedWallet
     projectName: document.getElementById('project-name').value,
     contractDescription: document.getElementById('contract-description').value,
     codeSnippet: document.getElementById('code-snippet').value,
