@@ -35,8 +35,11 @@ export async function loadHistory(showAll = false) {
     historyList.innerHTML = ''; // 清空現有內容
 
     if (data.length > 0) {
+      // 按時間由新到舊排序
+      const sortedData = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
       // 如果只顯示部分記錄，限制為前 5 筆
-      const recordsToShow = showAll ? data : data.slice(0, 5);
+      const recordsToShow = showAll ? sortedData : sortedData.slice(0, 5);
 
       recordsToShow.forEach((item) => {
         const listItem = document.createElement('li');
