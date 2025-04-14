@@ -99,38 +99,38 @@ function showMessage(message, type = 'success') {
 
 // 表單提交函數
 export async function submitForm() {
-  if (!validateForm()) return;
+    if (!validateForm()) return;
 
-  const formData = {
-    timestamp: new Date().toISOString(),
-    contractAddress: document.getElementById('contract-address').value,
-    wallet: getWalletAddress().value, // 獲取全局變數 window.connectedWallet
-    projectName: document.getElementById('project-name').value,
-    contractDescription: document.getElementById('contract-description').value,
-    codeSnippet: document.getElementById('code-snippet').value,
-  };
+    const formData = {
+        timestamp: new Date().toISOString(),
+        contractAddress: document.getElementById('contract-address').value,
+        wallet: getWalletAddress(), // 修正這裡，直接使用 getWalletAddress()
+        projectName: document.getElementById('project-name').value,
+        contractDescription: document.getElementById('contract-description').value,
+        codeSnippet: document.getElementById('code-snippet').value,
+    };
 
-  const codeLines = codeAnalyzer.analyze(formData.codeSnippet);
-  if (codeLines < 1) {
-    showMessage('Code content cannot be empty', 'error'); // 程式碼內容不可為空
-    return;
-  }
+    const codeLines = codeAnalyzer.analyze(formData.codeSnippet);
+    if (codeLines < 1) {
+        showMessage('Code content cannot be empty', 'error'); // 程式碼內容不可為空
+        return;
+    }
 
-  try {
-    const response = await fetch('/.netlify/functions/upload', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
+    try {
+        const response = await fetch('/.netlify/functions/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        });
 
-    if (!response.ok) throw new Error('Upload failed');
+        if (!response.ok) throw new Error('Upload failed');
 
-    showMessage('Upload successful!', 'success'); // 上傳成功！
-    document.getElementById('upload-form').reset();
-  } catch (error) {
-    showMessage('Upload failed, please try again later', 'error'); // 上傳失敗，請稍後再試
-    console.error(error);
-  }
+        showMessage('Upload successful!', 'success'); // 上傳成功！
+        document.getElementById('upload-form').reset();
+    } catch (error) {
+        showMessage('Upload failed, please try again later', 'error'); // 上傳失敗，請稍後再試
+        console.error(error);
+    }
 }
 
 // 表單切換函數
