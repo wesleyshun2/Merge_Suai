@@ -2,10 +2,23 @@
 export async function loadHistory(showAll = false) {
   try {
     const response = await fetch('/.netlify/functions/get-history');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch history: ${response.statusText}`);
+    }
+
     const data = await response.json();
+    if (!Array.isArray(data)) {
+      throw new Error('Invalid API response format.');
+    }
 
     const historyList = document.getElementById('history-list');
     const showAllButton = document.getElementById('show-all');
+
+    if (!historyList || !showAllButton) {
+      console.error('Required DOM elements are missing.');
+      return;
+    }
+
     historyList.innerHTML = ''; // 清空現有內容
 
     if (data.length > 0) {
@@ -32,9 +45,11 @@ export async function loadHistory(showAll = false) {
       showAllButton.classList.add('hidden'); // 如果沒有記錄，隱藏按鈕
     }
   } catch (error) {
-    console.error(error);
+    console.error('Error loading history:', error);
     const historyList = document.getElementById('history-list');
-    historyList.innerHTML = '<li class="error-msg">Reading failed, please try later</li>';
+    if (historyList) {
+      historyList.innerHTML = '<li class="error-msg">Reading failed, please try later</li>';
+    }
   }
 }
 
