@@ -94,12 +94,20 @@ function showMessage(message, type = 'success') {
 
 // 表單提交函數
 export async function submitForm() {
+  // 自動讀取連結的錢包地址
+  const walletAddress = window.connectedWallet;
+
+  if (!walletAddress) {
+    showMessage('請先連結錢包', 'error');
+    return;
+  }
+
   if (!validateForm()) return;
 
   const formData = {
     timestamp: new Date().toISOString(),
     contractAddress: document.getElementById('contract-address').value,
-    wallet: document.getElementById('wallet').value,
+    wallet: walletAddress, // 使用自動讀取的錢包地址
     projectName: document.getElementById('project-name').value,
     contractDescription: document.getElementById('contract-description').value,
     codeSnippet: document.getElementById('code-snippet').value,
@@ -118,16 +126,17 @@ export async function submitForm() {
       body: JSON.stringify(formData),
     });
 
-    if (!response.ok) throw new Error('Upload failed');
+    if (!response.ok) {
+      throw new Error('Upload failed');
+    }
 
     showMessage('Upload successful!', 'success'); // 上傳成功！
     document.getElementById('upload-form').reset();
   } catch (error) {
-    showMessage('Upload failed, please try again later', 'error'); // 上傳失敗，請稍後再試
-    console.error(error);
+    showMessage('Upload failed, please try again later', 'error'); // 上傳失敗，請稍後再試    
   }
 }
-
+ㄊ
 // 表單切換函數
 export function toggleUploadForm() {
   const form = document.getElementById('upload-form');
