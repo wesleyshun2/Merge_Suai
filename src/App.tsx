@@ -22,7 +22,6 @@ function ConnectedAccount() {
 
     // 將錢包地址存入全局變數
     window.connectedWallet = account.address;
-    return <div>Connected Wallet: {account.address}</div>;
 }
 
 export default App;

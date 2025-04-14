@@ -14,15 +14,16 @@
 
   <!-- 顯示連結的錢包帳戶 -->
   <div id="connected-wallet" class="wallet-info">
-    Connected Wallet: <span id="wallet-address">Not connected</span>
+    Connected-Wallet: <span id="wallet-address">Not connected</span>
   </div>
 
   <!-- 上傳紀錄 -->
   <section class="upload-history">
+
   <!-- 上傳區塊 -->
   <div class="upload-section">
-    <div class="upload-trigger" onclick="toggleUploadForm()">
-      <div class="upload-header">Upload Code</div>
+    <div class="upload-trigger">
+      <div class="upload-header">Upload Your Codes</div>
     </div>  
     
     <form id="upload-form" class="hidden">
@@ -54,7 +55,6 @@
           id="code-snippet" 
           placeholder="Enter code snippet" 
           rows="10"
-          oninput="updateCodeStats(this.value)"
           required
         ></textarea>
         <div class="code-stats">

@@ -36,7 +36,6 @@ window.addEventListener('DOMContentLoaded', () => {
 function displayWalletAddress() {
     const walletElement = document.getElementById('wallet-address');
     if (!walletElement) {
-        console.error('Element with ID "wallet-address" not found.');
         return;
     }
 
@@ -53,6 +52,3 @@ function displayWalletAddress() {
 
 // 頁面載入時加載歷史紀錄
 window.addEventListener('load', () => loadHistory());
-
-// 頁面載入時顯示錢包地址
-window.addEventListener('load', displayWalletAddress);
