@@ -1,7 +1,20 @@
 // 歷史紀錄加載函數
 export async function loadHistory(showAll = false) {
   try {
-    const response = await fetch('/.netlify/functions/get-history');
+    // 獲取全局變數 window.connectedWallet
+    const walletAddress = window.connectedWallet || 'Not connected';
+
+    // 如果未連結錢包，顯示錯誤訊息並停止執行
+    if (walletAddress === 'Not connected') {
+      const historyList = document.getElementById('history-list');
+      if (historyList) {
+        historyList.innerHTML = '<li class="error-msg">Please connect your wallet to view history</li>';
+      }
+      return;
+    }
+
+    // 向後端發送請求，附加錢包地址作為查詢參數
+    const response = await fetch(`/.netlify/functions/get-history?wallet=${encodeURIComponent(walletAddress)}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch history: ${response.statusText}`);
     }

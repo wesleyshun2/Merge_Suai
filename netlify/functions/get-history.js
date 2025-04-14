@@ -10,20 +10,35 @@ AWS.config.update({
 // 初始化 DynamoDB
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-exports.handler = async () => {
+exports.handler = async (event) => {
   try {
+    // 從查詢參數中獲取錢包地址
+    const wallet = event.queryStringParameters && event.queryStringParameters.wallet;
+
+    if (!wallet) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Wallet address is required' }),
+      };
+    }
+
+    // 查詢 DynamoDB，根據錢包地址過濾資料
     const params = {
       TableName: 'suai_history',
+      KeyConditionExpression: 'wallet = :wallet',
+      ExpressionAttributeValues: {
+        ':wallet': wallet,
+      },
     };
 
-    const result = await dynamoDb.scan(params).promise();
+    const result = await dynamoDb.query(params).promise();
 
     return {
       statusCode: 200,
       body: JSON.stringify(result.Items),
     };
   } catch (error) {
-    console.error(error);
+    console.error('Error querying DynamoDB:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: '伺服器錯誤' }),
