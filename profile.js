@@ -36,7 +36,8 @@ window.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('walletUpdated', (event) => {
     const walletElement = document.getElementById('wallet-display');
     if (walletElement) {
-        walletElement.textContent = event.detail || 'Not connected';
+        const formattedWallet = window.formattedWallet || 'Not connected';
+        walletElement.textContent = formattedWallet;
     }
 });
 
@@ -48,8 +49,8 @@ function displayWalletAddress() {
     }
 
     const checkWallet = () => {
-        const walletAddress = window.connectedWallet || 'Not connected';
-        walletElement.textContent = walletAddress;
+        const formattedWallet = window.formattedWallet || 'Not connected';
+        walletElement.textContent = formattedWallet;
         if (!window.connectedWallet) {
             setTimeout(checkWallet, 500); // 每 500 毫秒檢查一次
         }
