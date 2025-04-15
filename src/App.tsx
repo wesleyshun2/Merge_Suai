@@ -17,7 +17,7 @@ function App() {
 function ConnectedAccount() { 
     const account = useCurrentAccount();
     if (!account) {
-        return <div>Connected to check history or upload</div>;
+        return <div>Connect your wallet to check history and upload</div>;
     }
 
     // 將錢包地址存入全局變數

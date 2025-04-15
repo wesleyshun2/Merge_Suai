@@ -13,7 +13,7 @@
   transition: all 0.3s;
 }
 
-/* 修正表單展開動畫 */
+/* 表單展開動畫 */
 #upload-form {
   max-height: 0;
   overflow: hidden;
