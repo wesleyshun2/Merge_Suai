@@ -92,9 +92,14 @@ function validateForm() {
 // 顯示提示訊息的函數
 function showMessage(message, type = 'success') {
   const messageBox = document.getElementById('message-box');
+  const submitButton = document.getElementById('submit-btn');
+
   messageBox.textContent = message;
   messageBox.className = `message-box ${type}`;
   messageBox.style.display = 'block';
+
+  // 將提示訊息移動到 Submit 按鈕的上方
+  submitButton.parentNode.insertBefore(messageBox, submitButton);
 }
 
 // 表單提交函數

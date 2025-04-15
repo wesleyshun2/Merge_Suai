@@ -24,7 +24,7 @@
     <ul id="history-list">
       <!-- 歷史紀錄將顯示在這裡 -->
     </ul>
-    <button id="show-all" class="hidden">Show All</button>
+    <button id="show-all" class="hidden">Full upload history</button>
   </section>
 
   <!-- 上傳區塊 -->
@@ -70,6 +70,9 @@
         </div>
       </div>
    
+      <!-- 確定上傳按鈕 -->
+      <button type="button" onclick="submitForm()" id="submit-btn">Submit</button>
+    
       <!-- 授權條款 -->
       <div class="terms-section">
         <p id="terms-summary" onclick="toggleTerms()">By uploading, you agree to the terms ▼</p>
@@ -77,9 +80,8 @@
           <p>Terms: Uploaded code will be stored and analyzed. Please ensure you have the legal rights to the code.</p>
         </div>
       </div>
-    
-      <!-- 確定上傳按鈕 -->
-      <button type="button" onclick="submitForm()" id="submit-btn">Submit</button>
+
+      
     </form>
   </div>
 
