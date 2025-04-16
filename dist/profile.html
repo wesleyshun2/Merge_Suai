@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suai Profile</title>
-  <script type="module" crossorigin src="/assets/profile-D_HnkWmk.js"></script>
+  <script type="module" crossorigin src="/assets/profile-CseW0Nb_.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/profile-BC7L7k-z.css">
 </head>
 
@@ -14,27 +14,29 @@
 
   <!-- 上傳紀錄 -->
   <section class="upload-history">
-    <h2 id="history-title">Upload History</h2>
-    <ul id="history-list" class="history-list"></ul>
-    <a href="javascript:void(0);" id="show-all" onclick="loadHistory(true)">▼ Show Full History</a>
+    <h2>Upload History</h2>
+    <ul id="history-list">
+      <!-- 歷史紀錄將顯示在這裡 -->
+    </ul>
+    <button id="show-all" class="hidden">Full upload history</button>
   </section>
 
   <!-- 上傳區塊 -->
   <div class="upload-section">
-    <div class="upload-trigger" onclick="toggleUploadForm()">
-      <div class="upload-header">Upload Code</div>
+    <div class="upload-trigger">
+      <div class="upload-header">Upload Your Codes</div>
     </div>  
     
     <form id="upload-form" class="hidden">
-      <!-- 暫時欄位 -->
+      <!-- 錢包地址欄位 -->
       <div class="form-group required">
         <label for="wallet">Wallet Address</label>
-        <input type="text" id="wallet" name="wallet" required />
+        <span id="wallet-display">Not connected</span>
       </div>
 
       <!-- 必填欄位 -->
       <div class="form-group required">
-        <label for="contract-address">Contract Address</label>
+        <label for="contract-address">Sui Address of the Contract</label>
         <input type="text" id="contract-address" placeholder="Enter contract address" required>
       </div>
 
@@ -49,12 +51,11 @@
       </div>
 
       <div class="form-group required">
-        <label for="code-snippet">Code Snippet</label>
+        <label for="code-snippet">Move Contract Codes</label>
         <textarea 
           id="code-snippet" 
           placeholder="Enter code snippet" 
           rows="10"
-          oninput="updateCodeStats(this.value)"
           required
         ></textarea>
         <div class="code-stats">
@@ -63,16 +64,16 @@
         </div>
       </div>
    
+      <!-- 確定上傳按鈕 -->
+      <button type="button" onclick="submitForm()" id="submit-btn">Submit</button>
+    
       <!-- 授權條款 -->
       <div class="terms-section">
         <p id="terms-summary" onclick="toggleTerms()">By uploading, you agree to the terms ▼</p>
-        <div id="terms-content" class="hidden">
-          <p>Terms: Uploaded code will be stored and analyzed. Please ensure you have the legal rights to the code.</p>
-        </div>
+        <iframe id="terms-content" class="hidden" src="/terms.html" style="width: 100%; height: 300px; border: none;"></iframe>
       </div>
-    
-      <!-- 確定上傳按鈕 -->
-      <button type="button" onclick="submitForm()" id="submit-btn">Submit</button>
+
+
     </form>
   </div>
 
