@@ -1,1 +1,2 @@
-https://1st-test-sui-ts.netlify.app/
+website on Netlify
+https://mergesuai.netlify.app/
