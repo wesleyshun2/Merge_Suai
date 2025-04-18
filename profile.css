@@ -4,9 +4,19 @@
   font-weight: 400;
 }
 
+/* 背景*/
+body {
+  background-image: url('/resource/profile_background.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+}
+
 /* 上傳表單動畫 */
 .upload-trigger {
   border: 2px dashed #ccc;
+  font-size: 1.2rem;
   padding: 2rem;
   text-align: center;
   cursor: pointer;
@@ -173,4 +183,19 @@ textarea {
 
 .hidden {
   display: none;
+}
+
+#submit-btn {
+  display: inline-block;
+  background: #cae1ff;
+  color: #091c5c;
+  text-decoration: none;
+  padding: 8px 60px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+#submit-btn:hover {
+  background-color: #2b62b4; /* 滑鼠懸停時的背景顏色 */
+  color: #fff
 }
