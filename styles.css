@@ -1,0 +1,262 @@
+/* Reset and basic styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: lighter;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h6 {
+  font-size: 0.6rem;
+  line-height: 3;
+  font-weight: lighter;
+}
+
+header.hero {
+  background: url('resource/index_1.jpg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  min-height: 400px;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+header.hero .content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+header .logo img {
+  max-width: 200px;
+  margin-bottom: 10px;
+}
+
+.intro {
+  padding: 40px 20px;
+}
+
+.intro-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.intro-image {
+  flex: 1;
+  max-width: 42%;
+  height: auto;
+  border-radius: 15px;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #0f4b99;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-size: 1.5rem;
+}
+
+.cta-button:hover {
+  background: #027cff;
+}
+
+/* Features styles */
+/* 整大段框架 */
+.features {
+  padding: 20px 20px;
+}
+
+.feature-items {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/*左側大框架*/
+.feature-left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+/*第一小段*/
+.feature-title { 
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  position: relative;
+}
+
+.feature-title-text { 
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 0.5em;
+}
+
+.feature-block-arrow {
+  display: flex;
+  }
+
+
+.feature-text {
+  margin: 1em;
+  flex: 1; /* 讓文字部分自適應剩餘空間 */
+}
+
+.feature-icon-container {
+  display: flex;
+  position: relative;
+  justify-content: left;
+  height: 100px;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.feature-icon-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+.feature-icon {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+}
+
+/*右側圖片*/
+.feature-right {
+  display: flex;
+  flex: 1;
+}
+
+/*右側圖片*/
+.feature-right img {
+  max-width: 105%;
+  vertical-align: middle;
+  height: auto;
+  border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+  .feature-items {
+    flex-direction: column;
+  }
+
+  .feature-right {
+    display: none;
+  }
+}
+
+/* Vision styles */
+.vision {
+  position: relative;
+  color: #fff;
+  background: url('./resource/index_4_background.jpg') no-repeat center center;
+  background-size: cover;
+  padding: 30px 30px;
+}
+
+.vision-title {
+  margin: 0 auto;
+  position: center;
+  max-width: 900px;
+  text-align: left;
+}
+
+.vision-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.vision-column {
+  flex: 1;
+  text-align: left;
+}
+
+.vision-column img {
+  max-width: 100%;
+  height: auto;
+}
+
+.vision-top {
+  margin-bottom: 8em; /* 添加間距 */
+}
+
+.vision-bottom {
+  margin-top: 8em; /* 添加間距 */
+}
+
+@media (max-width: 600px) {
+  .vision-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .vision-title {
+    margin-bottom: 20px;
+  }
+
+  .vision-text p {
+    margin-top: 10px;
+  }
+}
+
+footer {
+  text-align: center;
+  background-color: #384677;
+  color: #ffffffb2;
+}

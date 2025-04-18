@@ -1,0 +1,38 @@
+Collecting Move Code Dataset for AI Tuning
+
+---
+
+We Are Building Datasets
+
+Contribute your codes
+Provide your on-chain Sui codes to join datasets.
+
+And get royalty
+Builders receive royalty when their code contributes to our project.
+
+---
+
+Why ?
+Current AI Struggles with Smart Contracts
+
+Sui-Specific Tuning
+We prepare datasets specialized for Sui Move language.
+
+Lower Entry Barriers
+Help people who want to join Sui. 
+
+Accelerating Building on Sui
+AI tools can speed up coding processes.
+
+---
+
+Our Vision
+
+Collaborate
+Create harmony between AI and human developers.
+
+Expand 
+Help experts build quicker and easier.
+
+Growth
+Drive Sui adoption through better development tools.
