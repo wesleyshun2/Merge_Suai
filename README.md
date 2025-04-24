@@ -6,4 +6,4 @@ It's frontend hosts on Netlify, the backend is on Netlify Function, and saves da
 
 Website link: [mergesuai.netlify](https://mergesuai.netlify.app/)
 
-Team: Arcoshina、Tiny_chen
+Team: Arcoshina & Tiny_chen
